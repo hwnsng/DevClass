@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { cartApi, paymentApi } from "../lib/api";
 import MockPaymentModal from "../components/MockPaymentModal";
 import ConfirmToast from "../components/ConfirmToast";
+import { useToast } from "../components/ToastProvider";
 
 function getLocalUserId(): number {
   try {
@@ -22,6 +23,7 @@ interface CartItem {
 }
 
 export default function CartPage() {
+  const { showToast } = useToast();
   const router = useRouter();
   const [items, setItems] = useState<CartItem[]>([]);
   const [selected, setSelected] = useState<Set<number>>(new Set());
@@ -59,7 +61,7 @@ export default function CartPage() {
   const totalAmount = selectedItems.reduce((sum, i) => sum + i.price, 0);
 
   async function handlePayment() {
-    if (selectedItems.length === 0) return alert("결제할 강의를 선택해주세요.");
+    if (selectedItems.length === 0) return showToast("결제할 강의를 선택해주세요.", "error");
     setShowPayment(true);
   }
 

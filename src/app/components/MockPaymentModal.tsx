@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useToast } from "./ToastProvider";
 
 export interface PayItem {
   courseId: number;
@@ -26,6 +27,7 @@ function formatExpiry(val: string) {
 }
 
 export default function MockPaymentModal({ items, onPay, onClose }: Props) {
+  const { showToast } = useToast();
   const [paying, setPaying] = useState(false);
   const [paid, setPaid] = useState(false);
   const [cardNumber, setCardNumber] = useState("");
@@ -37,12 +39,16 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
   const total = items.reduce((s, i) => s + i.price, 0);
 
   const handlePay = async () => {
+    if (method === "card" && cardNumber.replace(/\D/g, "").length !== 16) return showToast("카드번호 16자리를 입력해주세요.", "error");
+    if (method === "card" && expiry.replace(/\D/g, "").length !== 4) return showToast("카드 유효기간을 입력해주세요.", "error");
+    if (method === "card" && cvv.length !== 3) return showToast("CVV 3자리를 입력해주세요.", "error");
+    if (method === "card" && !cardName.trim()) return showToast("카드 소유자 이름을 입력해주세요.", "error");
     setPaying(true);
     try {
       await onPay();
       setPaid(true);
     } catch (e: any) {
-      alert(e.message || "결제 처리 중 오류가 발생했습니다.");
+      showToast(e.message || "결제 처리 중 오류가 발생했습니다.", "error");
     } finally {
       setPaying(false);
     }

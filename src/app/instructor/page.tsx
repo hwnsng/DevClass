@@ -10,6 +10,7 @@ import CourseCard from "./_components/CourseCard";
 import CreateCourseModal from "./_components/CreateCourseModal";
 import LessonManageModal from "./_components/LessonManageModal";
 import EditCourseModal from "./_components/EditCourseModal";
+import InstructorQuestions from "./_components/InstructorQuestions";
 
 function uid() {
   return Math.random().toString(36).slice(2);
@@ -195,6 +196,8 @@ export default function InstructorPage() {
             </div>
           ))}
         </div>
+
+        <InstructorQuestions />
 
         {/* 강의 목록 */}
         <h2 style={{ fontSize: 18, fontWeight: 700, color: "#1a1a2e", marginBottom: 16 }}>내 강의 목록</h2>

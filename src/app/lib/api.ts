@@ -180,6 +180,31 @@ export const notificationApi = {
 // ─── 관리자 사용자 관리 ────────────────────────────
 export const adminApi = {
   getUsers: () => apiFetch("/admin/users"),
+  getDashboard: () => apiFetch("/admin/dashboard"),
+  getJobs: () => apiFetch("/admin/jobs/runs"),
+  getCourses: () => apiFetch("/admin/courses"),
+  updateCourseStatus: (courseId: number, status: "PUBLISHED" | "HIDDEN") =>
+    apiFetch(`/admin/courses/${courseId}/status`, { method: "PUT", body: JSON.stringify({ status }) }),
   deactivateUser: (userId: number) => apiFetch(`/admin/users/${userId}/deactivate`, { method: "PUT" }),
   activateUser: (userId: number) => apiFetch(`/admin/users/${userId}/activate`, { method: "PUT" }),
+};
+
+export const questionApi = {
+  getCourseQuestions: (courseId: number) => apiFetch(`/courses/${courseId}/questions`),
+  create: (courseId: number, data: { title: string; content: string }) =>
+    apiFetch(`/courses/${courseId}/questions`, { method: "POST", body: JSON.stringify(data) }),
+  getInstructorQuestions: (courseId?: number) =>
+    apiFetch(`/instructor/questions${courseId ? `?courseId=${courseId}` : ""}`),
+  answer: (questionId: number, answer: string) =>
+    apiFetch(`/questions/${questionId}/answer`, { method: "PUT", body: JSON.stringify({ answer }) }),
+};
+
+// ─── 구독 (강사 팔로우) ────────────────────────────
+export const subscriptionApi = {
+  subscribe: (userId: number, instructorId: number) =>
+    apiFetch("/subscriptions", { method: "POST", body: JSON.stringify({ userId, instructorId }) }),
+  unsubscribe: (userId: number, instructorId: number) =>
+    apiFetch(`/subscriptions?userId=${userId}&instructorId=${instructorId}`, { method: "DELETE" }),
+  isSubscribed: (userId: number, instructorId: number) =>
+    apiFetch(`/subscriptions/check?userId=${userId}&instructorId=${instructorId}`),
 };
