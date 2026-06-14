@@ -18,7 +18,7 @@ function PaymentFailContent() {
         <p style={{ color: "#aaa", fontSize: 16, marginBottom: 32 }}>{errorMsg}</p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
           <button
-            style={{ background: "#20B486", color: "#fff", border: "none", borderRadius: 8, padding: "12px 24px", fontSize: 16, fontWeight: 600, cursor: "pointer" }}
+            style={{ background: "#d00000", color: "#fff", border: "none", borderRadius: 8, padding: "12px 24px", fontSize: 16, fontWeight: 600, cursor: "pointer" }}
             onClick={() => router.push("/cart")}
           >
             장바구니로 돌아가기

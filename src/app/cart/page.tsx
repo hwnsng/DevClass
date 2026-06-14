@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { cartApi, paymentApi } from "../lib/api";
 import MockPaymentModal from "../components/MockPaymentModal";
 import ConfirmToast from "../components/ConfirmToast";
+import { useToast } from "../components/ToastProvider";
 
 function getLocalUserId(): number {
   try {
@@ -22,6 +23,7 @@ interface CartItem {
 }
 
 export default function CartPage() {
+  const { showToast } = useToast();
   const router = useRouter();
   const [items, setItems] = useState<CartItem[]>([]);
   const [selected, setSelected] = useState<Set<number>>(new Set());
@@ -59,7 +61,7 @@ export default function CartPage() {
   const totalAmount = selectedItems.reduce((sum, i) => sum + i.price, 0);
 
   async function handlePayment() {
-    if (selectedItems.length === 0) return alert("결제할 강의를 선택해주세요.");
+    if (selectedItems.length === 0) return showToast("결제할 강의를 선택해주세요.", "error");
     setShowPayment(true);
   }
 
@@ -100,12 +102,12 @@ export default function CartPage() {
                   type="checkbox"
                   checked={selected.has(item.cartItemId)}
                   onChange={() => toggleSelect(item.cartItemId)}
-                  style={{ width: 18, height: 18, accentColor: "#20B486", flexShrink: 0 }}
+                  style={{ width: 18, height: 18, accentColor: "#d00000", flexShrink: 0 }}
                 />
                 <div
                   style={{
                     width: 80, height: 54, borderRadius: 8, flexShrink: 0,
-                    background: item.thumbnailUrl ? `url(${item.thumbnailUrl}) center/cover` : "linear-gradient(135deg, #20B486, #17926d)",
+                    background: item.thumbnailUrl ? `url(${item.thumbnailUrl}) center/cover` : "linear-gradient(135deg, #d00000, #9d0208)",
                   }}
                 />
                 <div style={{ flex: 1 }}>
@@ -133,7 +135,7 @@ export default function CartPage() {
             </div>
             <div style={styles.summaryRow}>
               <span style={{ color: "#aaa" }}>총 금액</span>
-              <span style={{ color: "#20B486", fontSize: 20, fontWeight: 700 }}>
+              <span style={{ color: "#d00000", fontSize: 20, fontWeight: 700 }}>
                 {totalAmount === 0 ? "무료" : totalAmount.toLocaleString() + "원"}
               </span>
             </div>
@@ -196,7 +198,7 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "16px 20px", border: "1px solid rgba(255,255,255,0.08)",
   },
   itemTitle: { color: "#fff", fontWeight: 600, marginBottom: 4, fontSize: 15 },
-  itemPrice: { color: "#20B486", fontSize: 14 },
+  itemPrice: { color: "#d00000", fontSize: 14 },
   removeBtn: {
     background: "none", border: "none", color: "#888", cursor: "pointer",
     fontSize: 18, padding: "4px 8px",
@@ -207,7 +209,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   summaryRow: { display: "flex", justifyContent: "space-between", marginBottom: 12 },
   btn: {
-    background: "#20B486", color: "#fff", border: "none", borderRadius: 8,
+    background: "#d00000", color: "#fff", border: "none", borderRadius: 8,
     padding: "12px 24px", fontSize: 16, fontWeight: 700, cursor: "pointer",
   },
 };

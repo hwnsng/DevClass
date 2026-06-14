@@ -31,7 +31,7 @@ function PaymentSuccessContent() {
   }, [params]);
 
   if (status === "loading")
-    return <StatusPage icon="⏳" title="결제 처리 중..." sub="잠시만 기다려주세요." color="#20B486" />;
+    return <StatusPage icon="⏳" title="결제 처리 중..." sub="잠시만 기다려주세요." color="#d00000" />;
 
   if (status === "error")
     return (
@@ -41,7 +41,7 @@ function PaymentSuccessContent() {
     );
 
   return (
-    <StatusPage icon="✅" title="결제 완료!" sub="강의 수강 등록이 완료되었습니다." color="#20B486">
+    <StatusPage icon="✅" title="결제 완료!" sub="강의 수강 등록이 완료되었습니다." color="#d00000">
       <div style={{ display: "flex", gap: 12 }}>
         <button style={btn} onClick={() => router.push("/enrollments")}>내 강의 보기</button>
         <button style={{ ...btn, background: "rgba(255,255,255,0.1)" }} onClick={() => router.push("/")}>
@@ -68,7 +68,7 @@ function StatusPage({ icon, title, sub, color, children }: {
 }
 
 const btn: React.CSSProperties = {
-  background: "#20B486", color: "#fff", border: "none", borderRadius: 8,
+  background: "#d00000", color: "#fff", border: "none", borderRadius: 8,
   padding: "12px 24px", fontSize: 16, fontWeight: 600, cursor: "pointer",
 };
 

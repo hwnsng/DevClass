@@ -181,7 +181,7 @@ export default function ProgressPage() {
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 16 }}>
       <div style={{ fontSize: 48 }}>⚠️</div>
       <p style={{ color: "#ff4d4f" }}>{error}</p>
-      <Link href="/enrollments" style={{ color: "#20B486", fontWeight: 600, textDecoration: "none" }}>← 내 강의로</Link>
+      <Link href="/enrollments" style={{ color: "#d00000", fontWeight: 600, textDecoration: "none" }}>← 내 강의로</Link>
     </div>
   );
 
@@ -190,28 +190,28 @@ export default function ProgressPage() {
   const canReview = percent >= 80;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8faf9" }}>
+    <div style={{ minHeight: "100vh", background: "#fffaf1" }}>
       <Navbar active="내 강의" />
 
       {/* 상단 진도 바 */}
-      <div style={{ background: "#1a1a2e", padding: "20px 40px", color: "#fff" }}>
+      <div style={{ background: "#03071e", padding: "20px 40px", color: "#fff" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
-            <Link href="/enrollments" style={{ color: "#20B486", textDecoration: "none", fontSize: 13, fontWeight: 600 }}>← 내 강의</Link>
+            <Link href="/enrollments" style={{ color: "#d00000", textDecoration: "none", fontSize: 13, fontWeight: 600 }}>← 내 강의</Link>
             <h2 style={{ fontSize: 20, fontWeight: 700, marginTop: 8 }}>{course?.title}</h2>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
             {saveStatus === "saving" && <span style={{ fontSize: 13, color: "#aaa" }}>💾 저장 중...</span>}
-            {saveStatus === "saved" && <span style={{ fontSize: 13, color: "#20B486" }}>✓ 자동 저장됨</span>}
+            {saveStatus === "saved" && <span style={{ fontSize: 13, color: "#d00000" }}>✓ 자동 저장됨</span>}
             <div style={{ textAlign: "right" }}>
-              <div style={{ fontSize: 28, fontWeight: 800, color: "#20B486" }}>{percent}%</div>
+              <div style={{ fontSize: 28, fontWeight: 800, color: "#d00000" }}>{percent}%</div>
               <div style={{ fontSize: 12, color: "#aaa" }}>{completedCount}/{totalCount}강 완료</div>
             </div>
           </div>
         </div>
         <div style={{ maxWidth: 1200, margin: "12px auto 0" }}>
           <div style={{ height: 6, background: "rgba(255,255,255,0.15)", borderRadius: 3, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: `${percent}%`, background: "#20B486", borderRadius: 3, transition: "width 0.6s ease" }} />
+            <div style={{ height: "100%", width: `${percent}%`, background: "#d00000", borderRadius: 3, transition: "width 0.6s ease" }} />
           </div>
         </div>
       </div>
@@ -240,8 +240,8 @@ export default function ProgressPage() {
           <div style={{ background: "#fff", borderRadius: 16, padding: "22px 24px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div style={{ flex: 1, marginRight: 16 }}>
-                <div style={{ fontSize: 12, color: "#20B486", fontWeight: 700, marginBottom: 6 }}>{currentLesson?.order}강</div>
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: "#1a1a2e", margin: 0, marginBottom: 8 }}>{currentLesson?.title}</h3>
+                <div style={{ fontSize: 12, color: "#d00000", fontWeight: 700, marginBottom: 6 }}>{currentLesson?.order}강</div>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: "#03071e", margin: 0, marginBottom: 8 }}>{currentLesson?.title}</h3>
                 {currentLesson?.description && (
                   <p style={{ fontSize: 14, color: "#666", lineHeight: 1.7, margin: 0, marginBottom: 8 }}>{currentLesson.description}</p>
                 )}
@@ -254,7 +254,7 @@ export default function ProgressPage() {
               <div style={{ display: "flex", gap: 10, alignItems: "center", flexShrink: 0 }}>
                 <button
                   onClick={handleComplete}
-                  style={{ background: isLastLesson ? "#17926d" : "#20B486", color: "#fff", border: "none", borderRadius: 10, padding: "10px 22px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
+                  style={{ background: isLastLesson ? "#9d0208" : "#d00000", color: "#fff", border: "none", borderRadius: 10, padding: "10px 22px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
                 >
                   {isLastLesson ? "✓ 강의 완료" : "다음 강의 →"}
                 </button>
@@ -263,27 +263,27 @@ export default function ProgressPage() {
           </div>
 
           {/* 진도 현황 카드 */}
-          <div style={{ background: "#e8f5f0", borderRadius: 12, padding: "14px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ background: "#fff0df", borderRadius: 12, padding: "14px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <span style={{ fontSize: 20 }}>📊</span>
               <div>
-                <p style={{ fontSize: 13, color: "#17926d", margin: 0, fontWeight: 600 }}>수강 진도율</p>
-                <p style={{ fontSize: 12, color: "#20B486", margin: 0 }}>
+                <p style={{ fontSize: 13, color: "#9d0208", margin: 0, fontWeight: 600 }}>수강 진도율</p>
+                <p style={{ fontSize: 12, color: "#d00000", margin: 0 }}>
                   {completedCount}개 완료 · 남은 강의 {totalCount - completedCount}개
                 </p>
               </div>
             </div>
             <div style={{ textAlign: "right" }}>
-              <div style={{ fontSize: 24, fontWeight: 800, color: "#20B486" }}>{percent}%</div>
-              <div style={{ fontSize: 12, color: "#17926d" }}>{completedCount}/{totalCount}강</div>
+              <div style={{ fontSize: 24, fontWeight: 800, color: "#d00000" }}>{percent}%</div>
+              <div style={{ fontSize: 12, color: "#9d0208" }}>{completedCount}/{totalCount}강</div>
             </div>
           </div>
 
           {/* 리뷰 섹션 */}
           <div style={{ background: "#fff", borderRadius: 16, padding: "22px 24px", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: "#1a1a2e", marginBottom: 12 }}>⭐ 강의 리뷰</h3>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: "#03071e", marginBottom: 12 }}>⭐ 강의 리뷰</h3>
             {myReview ? (
-              <div style={{ background: "#f8faf9", borderRadius: 10, padding: 16, border: "1px solid #eef7f3" }}>
+              <div style={{ background: "#fffaf1", borderRadius: 10, padding: 16, border: "1px solid #eadfd3" }}>
                 <div style={{ display: "flex", gap: 4, marginBottom: 8 }}>
                   {[1,2,3,4,5].map(s => (
                     <span key={s} style={{ fontSize: 18, color: s <= myReview.rating ? "#f59e0b" : "#ddd" }}>★</span>
@@ -315,7 +315,7 @@ export default function ProgressPage() {
                     <button
                       onClick={handleSubmitReview}
                       disabled={reviewSubmitting}
-                      style={{ background: "#20B486", color: "#fff", border: "none", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}
+                      style={{ background: "#d00000", color: "#fff", border: "none", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}
                     >
                       {reviewSubmitting ? "등록 중..." : "리뷰 등록"}
                     </button>
@@ -330,7 +330,7 @@ export default function ProgressPage() {
               ) : (
                 <button
                   onClick={() => setShowReviewForm(true)}
-                  style={{ background: "#20B486", color: "#fff", border: "none", borderRadius: 10, padding: "12px 24px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
+                  style={{ background: "#d00000", color: "#fff", border: "none", borderRadius: 10, padding: "12px 24px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}
                 >
                   ⭐ 리뷰 작성하기
                 </button>

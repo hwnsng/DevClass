@@ -116,12 +116,12 @@ export default function VideoPlayer({ lessonId, videoUrl, title, resumePosition,
           </div>
 
           {/* 북마크 툴바 */}
-          <div style={{ background: "#1a1a2e", padding: "10px 16px", display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+          <div style={{ background: "#03071e", padding: "10px 16px", display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
             {/* 북마크 추가 */}
             {!showNoteInput ? (
               <button
                 onClick={() => setShowNoteInput(true)}
-                style={{ background: "rgba(32,180,134,0.2)", color: "#20B486", border: "1px solid #20B486", borderRadius: 6, padding: "6px 12px", fontSize: 13, cursor: "pointer" }}
+                style={{ background: "rgba(208,0,0,0.16)", color: "#d00000", border: "1px solid #d00000", borderRadius: 6, padding: "6px 12px", fontSize: 13, cursor: "pointer" }}
               >
                 🔖 북마크 추가
               </button>
@@ -136,7 +136,7 @@ export default function VideoPlayer({ lessonId, videoUrl, title, resumePosition,
                 />
                 <button
                   onClick={handleAddBookmark}
-                  style={{ background: "#20B486", color: "#fff", border: "none", borderRadius: 6, padding: "6px 12px", fontSize: 13, cursor: "pointer" }}
+                  style={{ background: "#d00000", color: "#fff", border: "none", borderRadius: 6, padding: "6px 12px", fontSize: 13, cursor: "pointer" }}
                 >
                   추가
                 </button>
@@ -167,7 +167,7 @@ export default function VideoPlayer({ lessonId, videoUrl, title, resumePosition,
                 <div key={bm.bookmarkId} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <button
                     onClick={() => seekTo(bm.positionSeconds)}
-                    style={{ background: "rgba(32,180,134,0.15)", color: "#20B486", border: "none", borderRadius: 5, padding: "4px 10px", fontSize: 12, cursor: "pointer", fontWeight: 600, flexShrink: 0 }}
+                    style={{ background: "rgba(208,0,0,0.12)", color: "#d00000", border: "none", borderRadius: 5, padding: "4px 10px", fontSize: 12, cursor: "pointer", fontWeight: 600, flexShrink: 0 }}
                   >
                     {formatTime(bm.positionSeconds)}
                   </button>
@@ -184,8 +184,8 @@ export default function VideoPlayer({ lessonId, videoUrl, title, resumePosition,
           )}
         </>
       ) : (
-        <div style={{ aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, background: "#1a1a2e" }}>
-          <div style={{ width: 72, height: 72, background: "rgba(32,180,134,0.2)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32 }}>
+        <div style={{ aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, background: "#03071e" }}>
+          <div style={{ width: 72, height: 72, background: "rgba(208,0,0,0.16)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32 }}>
             ▶
           </div>
           <p style={{ color: "#aaa", fontSize: 15 }}>

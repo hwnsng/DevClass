@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useToast } from "./ToastProvider";
 
 export interface PayItem {
   courseId: number;
@@ -26,6 +27,7 @@ function formatExpiry(val: string) {
 }
 
 export default function MockPaymentModal({ items, onPay, onClose }: Props) {
+  const { showToast } = useToast();
   const [paying, setPaying] = useState(false);
   const [paid, setPaid] = useState(false);
   const [cardNumber, setCardNumber] = useState("");
@@ -37,12 +39,16 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
   const total = items.reduce((s, i) => s + i.price, 0);
 
   const handlePay = async () => {
+    if (method === "card" && cardNumber.replace(/\D/g, "").length !== 16) return showToast("카드번호 16자리를 입력해주세요.", "error");
+    if (method === "card" && expiry.replace(/\D/g, "").length !== 4) return showToast("카드 유효기간을 입력해주세요.", "error");
+    if (method === "card" && cvv.length !== 3) return showToast("CVV 3자리를 입력해주세요.", "error");
+    if (method === "card" && !cardName.trim()) return showToast("카드 소유자 이름을 입력해주세요.", "error");
     setPaying(true);
     try {
       await onPay();
       setPaid(true);
     } catch (e: any) {
-      alert(e.message || "결제 처리 중 오류가 발생했습니다.");
+      showToast(e.message || "결제 처리 중 오류가 발생했습니다.", "error");
     } finally {
       setPaying(false);
     }
@@ -77,7 +83,7 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
           /* ── 결제 완료 화면 ── */
           <div style={{ padding: "56px 40px", textAlign: "center" }}>
             <div style={{ fontSize: 72, marginBottom: 20 }}>🎉</div>
-            <h2 style={{ fontSize: 24, fontWeight: 800, color: "#1a1a2e", marginBottom: 10 }}>
+            <h2 style={{ fontSize: 24, fontWeight: 800, color: "#03071e", marginBottom: 10 }}>
               수강 등록 완료!
             </h2>
             <p style={{ color: "#666", fontSize: 15, lineHeight: 1.7, marginBottom: 8 }}>
@@ -89,7 +95,7 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
             <button
               onClick={onClose}
               style={{
-                background: "#20B486",
+                background: "#d00000",
                 color: "#fff",
                 border: "none",
                 borderRadius: 12,
@@ -119,7 +125,7 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
                   style={{
                     width: 36,
                     height: 36,
-                    background: "linear-gradient(135deg, #20B486, #17926d)",
+                    background: "linear-gradient(135deg, #d00000, #9d0208)",
                     borderRadius: 10,
                     display: "flex",
                     alignItems: "center",
@@ -131,7 +137,7 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
                 </div>
                 <div>
                   <div style={{ fontSize: 12, color: "#888" }}>안전결제</div>
-                  <div style={{ fontSize: 16, fontWeight: 800, color: "#1a1a2e" }}>DevClass Pay</div>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: "#03071e" }}>DevClass Pay</div>
                 </div>
               </div>
               <button
@@ -168,7 +174,7 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
                           borderRadius: 6,
                           background: item.thumbnailUrl
                             ? `url(${item.thumbnailUrl}) center/cover`
-                            : "linear-gradient(135deg, #20B486, #17926d)",
+                            : "linear-gradient(135deg, #d00000, #9d0208)",
                           flexShrink: 0,
                         }}
                       />
@@ -200,8 +206,8 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
                   alignItems: "center",
                 }}
               >
-                <span style={{ fontWeight: 700, fontSize: 15, color: "#1a1a2e" }}>최종 결제금액</span>
-                <span style={{ fontWeight: 800, fontSize: 20, color: "#20B486" }}>
+                <span style={{ fontWeight: 700, fontSize: 15, color: "#03071e" }}>최종 결제금액</span>
+                <span style={{ fontWeight: 800, fontSize: 20, color: "#d00000" }}>
                   {total === 0 ? "무료" : `₩${total.toLocaleString()}`}
                 </span>
               </div>
@@ -221,10 +227,10 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
                       style={{
                         flex: 1,
                         padding: "10px 4px",
-                        border: `1.5px solid ${method === m ? "#20B486" : "#e0e0e0"}`,
+                        border: `1.5px solid ${method === m ? "#d00000" : "#e0e0e0"}`,
                         borderRadius: 8,
                         background: method === m ? "#f0faf5" : "#fff",
-                        color: method === m ? "#20B486" : "#666",
+                        color: method === m ? "#d00000" : "#666",
                         fontWeight: method === m ? 700 : 500,
                         fontSize: 13,
                         cursor: "pointer",
@@ -344,7 +350,7 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
-                    background: "#f8faf9",
+                    background: "#fffaf1",
                     borderRadius: 8,
                     padding: "10px 14px",
                     marginBottom: 16,
@@ -362,7 +368,7 @@ export default function MockPaymentModal({ items, onPay, onClose }: Props) {
                 style={{
                   width: "100%",
                   padding: "16px",
-                  background: paying ? "#aaa" : "#20B486",
+                  background: paying ? "#aaa" : "#d00000",
                   color: "#fff",
                   border: "none",
                   borderRadius: 12,

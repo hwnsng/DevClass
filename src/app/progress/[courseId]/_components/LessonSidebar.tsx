@@ -33,10 +33,10 @@ export default function LessonSidebar({
       }}
     >
       {/* 사이드바 헤더 + 진도율 */}
-      <div style={{ background: "#1a1a2e", padding: "18px 24px" }}>
+      <div style={{ background: "#03071e", padding: "18px 24px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
           <h3 style={{ color: "#fff", fontSize: 15, fontWeight: 700, margin: 0 }}>강의 목록</h3>
-          <span style={{ color: "#20B486", fontSize: 13, fontWeight: 700 }}>
+          <span style={{ color: "#d00000", fontSize: 13, fontWeight: 700 }}>
             {completedCount}/{totalCount}강 완료
           </span>
         </div>
@@ -45,13 +45,13 @@ export default function LessonSidebar({
           <div style={{
             height: "100%",
             width: `${percent}%`,
-            background: "#20B486",
+            background: "#d00000",
             borderRadius: 3,
             transition: "width 0.5s ease",
           }} />
         </div>
         <div style={{ textAlign: "right", marginTop: 5 }}>
-          <span style={{ color: "#20B486", fontSize: 12, fontWeight: 700 }}>{percent}%</span>
+          <span style={{ color: "#d00000", fontSize: 12, fontWeight: 700 }}>{percent}%</span>
         </div>
       </div>
 
@@ -68,8 +68,8 @@ export default function LessonSidebar({
               alignItems: "center",
               gap: 12,
               cursor: "pointer",
-              background: isCurrent ? "#e8f5f0" : "#fff",
-              borderLeft: isCurrent ? "4px solid #20B486" : "4px solid transparent",
+              background: isCurrent ? "#fff0df" : "#fff",
+              borderLeft: isCurrent ? "4px solid #d00000" : "4px solid transparent",
               borderBottom: i < lessons.length - 1 ? "1px solid #f5f5f5" : "none",
               transition: "all 0.15s",
             }}
@@ -91,9 +91,9 @@ export default function LessonSidebar({
                 fontSize: 12,
                 fontWeight: 700,
                 flexShrink: 0,
-                background: isCompleted ? "#20B486" : isCurrent ? "#e8f5f0" : "#f0f0f0",
-                color: isCompleted ? "#fff" : isCurrent ? "#20B486" : "#aaa",
-                border: isCurrent && !isCompleted ? "2px solid #20B486" : "none",
+                background: isCompleted ? "#d00000" : isCurrent ? "#fff0df" : "#f0f0f0",
+                color: isCompleted ? "#fff" : isCurrent ? "#d00000" : "#aaa",
+                border: isCurrent && !isCompleted ? "2px solid #d00000" : "none",
               }}
             >
               {isCompleted ? "✓" : l.order}
@@ -103,7 +103,7 @@ export default function LessonSidebar({
                 style={{
                   fontSize: 13,
                   fontWeight: isCurrent ? 700 : 500,
-                  color: isCurrent ? "#20B486" : "#333",
+                  color: isCurrent ? "#d00000" : "#333",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
@@ -112,7 +112,7 @@ export default function LessonSidebar({
                 {l.title}
               </div>
               {isCurrent && (
-                <div style={{ fontSize: 11, color: "#20B486", marginTop: 2 }}>▶ 재생 중</div>
+                <div style={{ fontSize: 11, color: "#d00000", marginTop: 2 }}>▶ 재생 중</div>
               )}
             </div>
           </div>

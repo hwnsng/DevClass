@@ -1,13 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
+  output: "standalone",
+  images: {
+    remotePatterns: [
       {
-        source: "/api/:path*",
-        destination: "http://13.209.18.148:8080/api/:path*",
+        protocol: "http",
+        hostname: "localhost",
+        port: "8080",
+        pathname: "/api/**",
       },
-    ];
+    ],
+    formats: ["image/avif", "image/webp"],
   },
+  compress: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;

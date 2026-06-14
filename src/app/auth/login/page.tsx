@@ -1,80 +1,37 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authApi } from "@/app/lib/api";
+import { useToast } from "@/app/components/ToastProvider";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { showToast } = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async () => {
-    if (!email || !password) { setError("이메일과 비밀번호를 입력해주세요."); return; }
-    setError("");
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    if (!email.trim()) return showToast("이메일을 입력해주세요.", "error");
+    if (!/^\S+@\S+\.\S+$/.test(email)) return showToast("올바른 이메일 형식을 입력해주세요.", "error");
+    if (!password) return showToast("비밀번호를 입력해주세요.", "error");
     setLoading(true);
     try {
-      const data = await authApi.login({ email, password });
-      localStorage.setItem("devclass-auth", JSON.stringify({
-        id: data.id,
-        email: data.email,
-        name: data.name,
-        role: data.role,
-        token: data.token,
-      }));
-      router.push("/");
-    } catch (e: any) {
-      setError(e.message || "로그인에 실패했습니다.");
-    } finally {
-      setLoading(false);
-    }
+      const data = await authApi.login({ email: email.trim(), password });
+      localStorage.setItem("devclass-auth", JSON.stringify({ id: data.id, email: data.email, name: data.name, role: data.role, token: data.token }));
+      showToast("로그인되었습니다.", "success"); router.push("/");
+    } catch (error: any) { showToast(error.message || "로그인에 실패했습니다.", "error"); }
+    finally { setLoading(false); }
   };
-
-  return (
-    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #f8faf9 0%, #e8f5f0 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 24 }}>
-      <Link href="/" style={{ textDecoration: "none", marginBottom: 32 }}>
-        <span style={{ fontSize: 28, fontWeight: 800, color: "#20B486" }}>Dev</span>
-        <span style={{ fontSize: 28, fontWeight: 800, color: "#1a1a2e" }}>Class</span>
-      </Link>
-
-      <div style={{ background: "#fff", borderRadius: 20, padding: "40px 44px", width: "100%", maxWidth: 440, boxShadow: "0 8px 40px rgba(32,180,134,0.12)", border: "1.5px solid #e8f5f0" }}>
-        <h2 style={{ fontSize: 24, fontWeight: 800, color: "#1a1a2e", marginBottom: 8, textAlign: "center" }}>로그인</h2>
-        <p style={{ fontSize: 14, color: "#888", textAlign: "center", marginBottom: 32 }}>DevClass에 오신 걸 환영합니다!</p>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <div>
-            <label style={{ fontSize: 13, fontWeight: 600, color: "#555", display: "block", marginBottom: 8 }}>이메일</label>
-            <input type="email" placeholder="이메일을 입력하세요" value={email} onChange={e => setEmail(e.target.value)}
-              style={{ width: "100%", padding: "13px 16px", border: "1.5px solid #e0e0e0", borderRadius: 10, fontSize: 15, outline: "none", boxSizing: "border-box" }}
-              onFocus={e => (e.target as HTMLInputElement).style.borderColor = "#20B486"}
-              onBlur={e => (e.target as HTMLInputElement).style.borderColor = "#e0e0e0"} />
-          </div>
-          <div>
-            <label style={{ fontSize: 13, fontWeight: 600, color: "#555", display: "block", marginBottom: 8 }}>비밀번호</label>
-            <input type="password" placeholder="비밀번호를 입력하세요" value={password} onChange={e => setPassword(e.target.value)}
-              onKeyDown={e => e.key === "Enter" && handleSubmit()}
-              style={{ width: "100%", padding: "13px 16px", border: "1.5px solid #e0e0e0", borderRadius: 10, fontSize: 15, outline: "none", boxSizing: "border-box" }}
-              onFocus={e => (e.target as HTMLInputElement).style.borderColor = "#20B486"}
-              onBlur={e => (e.target as HTMLInputElement).style.borderColor = "#e0e0e0"} />
-          </div>
-
-          {error && <div style={{ background: "#fff5f5", border: "1px solid #ffcdd2", borderRadius: 8, padding: "10px 14px", fontSize: 13, color: "#e53935" }}>{error}</div>}
-
-          <button onClick={handleSubmit} disabled={loading}
-            style={{ width: "100%", padding: 15, background: loading ? "#aaa" : "#20B486", color: "#fff", border: "none", borderRadius: 12, fontSize: 16, fontWeight: 700, cursor: loading ? "default" : "pointer", marginTop: 8 }}>
-            {loading ? "로그인 중..." : "로그인"}
-          </button>
-        </div>
-
-        <div style={{ textAlign: "center", marginTop: 24, fontSize: 14, color: "#888" }}>
-          계정이 없으신가요?{" "}
-          <Link href="/auth/register" style={{ color: "#20B486", fontWeight: 700, textDecoration: "none" }}>회원가입</Link>
-        </div>
-      </div>
-
-      <Link href="/" style={{ marginTop: 24, color: "#aaa", textDecoration: "none", fontSize: 13 }}>← 메인으로 돌아가기</Link>
-    </div>
-  );
+  return <main className="auth-shell"><section className="card auth-card">
+    <Link className="brand" href="/"><span>Dev</span>Class</Link>
+    <div style={{ margin: "26px 0" }}><div className="eyebrow">Welcome back</div><h1 className="page-title" style={{ fontSize: 34 }}>다시 학습을 시작하세요</h1></div>
+    <form className="form-grid" onSubmit={submit} noValidate>
+      <div className="field"><label htmlFor="email">이메일</label><input id="email" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="student@devclass.com" /></div>
+      <div className="field"><label htmlFor="password">비밀번호</label><input id="password" type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호 입력" /></div>
+      <button className="btn btn-primary" disabled={loading}>{loading ? "로그인 중..." : "로그인"}</button>
+    </form>
+    <p className="page-copy" style={{ textAlign: "center" }}>계정이 없다면 <Link href="/auth/register" style={{ color: "#d00000", fontWeight: 900 }}>회원가입</Link></p>
+  </section></main>;
 }

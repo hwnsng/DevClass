@@ -84,7 +84,7 @@ export default function CreateCourseModal({
                 borderRadius: 2,
                 background:
                   step === "lessons" || (step === "info" && i === 0)
-                    ? "#20B486"
+                    ? "#d00000"
                     : "#e0e0e0",
               }}
             />
@@ -139,7 +139,7 @@ function StepInfo({
 
   return (
     <>
-      <h3 style={{ fontSize: 20, fontWeight: 800, color: "#1a1a2e", marginBottom: 6 }}>
+      <h3 style={{ fontSize: 20, fontWeight: 800, color: "#03071e", marginBottom: 6 }}>
         새 강의 만들기
       </h3>
       <p style={{ fontSize: 13, color: "#888", marginBottom: 24 }}>
@@ -217,7 +217,7 @@ function StepLessons({
 
   return (
     <>
-      <h3 style={{ fontSize: 20, fontWeight: 800, color: "#1a1a2e", marginBottom: 6 }}>
+      <h3 style={{ fontSize: 20, fontWeight: 800, color: "#03071e", marginBottom: 6 }}>
         레슨 추가
       </h3>
       <p style={{ fontSize: 13, color: "#888", marginBottom: 24 }}>
@@ -232,7 +232,7 @@ function StepLessons({
         background: thumbnailStatus === "done" ? "#f0faf5" : "#f8fdf9",
         marginBottom: 20,
       }}>
-        <p style={{ fontSize: 13, fontWeight: 700, color: "#20B486", marginBottom: 10 }}>
+        <p style={{ fontSize: 13, fontWeight: 700, color: "#d00000", marginBottom: 10 }}>
           {thumbnailStatus === "done" ? "✅ 썸네일 업로드 완료" : "📷 강의 썸네일 (선택)"}
         </p>
         {thumbnailStatus !== "done" && (

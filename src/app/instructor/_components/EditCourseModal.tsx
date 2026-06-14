@@ -68,7 +68,7 @@ export default function EditCourseModal({ course, onSaved, onClose }: Props) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 style={{ fontSize: 20, fontWeight: 800, color: "#1a1a2e", marginBottom: 24 }}>
+        <h3 style={{ fontSize: 20, fontWeight: 800, color: "#03071e", marginBottom: 24 }}>
           강의 수정
         </h3>
 
