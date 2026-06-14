@@ -111,7 +111,6 @@ export const paymentApi = {
     paymentKey: string;
     orderId: string;
     amount: number;
-    courseIds: number[];
   }) => apiFetch("/payments/confirm", { method: "POST", body: JSON.stringify(data) }),
   getMyPayments: (userId: number) => apiFetch(`/payments/users/${userId}`),
   cancel: (
