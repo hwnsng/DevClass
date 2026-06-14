@@ -98,7 +98,7 @@ export default function EnrollmentsPage() {
 
   return (
     <>
-    <div style={{ minHeight: "100vh", background: "#f8faf9" }}>
+    <div style={{ minHeight: "100vh", background: "#fffaf1" }}>
       <Navbar active="내 강의" />
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "48px 24px" }}>
         <div style={{ marginBottom: 32 }}>
@@ -106,7 +106,7 @@ export default function EnrollmentsPage() {
             style={{
               fontSize: 28,
               fontWeight: 800,
-              color: "#1a1a2e",
+              color: "#03071e",
               marginBottom: 6,
             }}
           >
@@ -114,7 +114,7 @@ export default function EnrollmentsPage() {
           </h1>
           <p style={{ fontSize: 15, color: "#888" }}>
             수강 중인 강의{" "}
-            <span style={{ color: "#20B486", fontWeight: 700 }}>
+            <span style={{ color: "#d00000", fontWeight: 700 }}>
               {enrollments.length}개
             </span>
           </p>
@@ -152,7 +152,7 @@ export default function EnrollmentsPage() {
               <span style={{ fontSize: 28 }}>{s.icon}</span>
               <div>
                 <div
-                  style={{ fontSize: 22, fontWeight: 800, color: "#20B486" }}
+                  style={{ fontSize: 22, fontWeight: 800, color: "#d00000" }}
                 >
                   {s.value}
                 </div>
@@ -178,7 +178,7 @@ export default function EnrollmentsPage() {
               onClick={fetchEnrollments}
               style={{
                 marginTop: 16,
-                background: "#20B486",
+                background: "#d00000",
                 color: "#fff",
                 border: "none",
                 padding: "10px 24px",
@@ -201,7 +201,7 @@ export default function EnrollmentsPage() {
             <Link
               href="/"
               style={{
-                background: "#20B486",
+                background: "#d00000",
                 color: "#fff",
                 textDecoration: "none",
                 padding: "12px 28px",
@@ -222,7 +222,7 @@ export default function EnrollmentsPage() {
                   borderRadius: 16,
                   padding: 24,
                   boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-                  border: "1.5px solid #eef7f3",
+                  border: "1.5px solid #eadfd3",
                 }}
               >
                 <div
@@ -245,7 +245,7 @@ export default function EnrollmentsPage() {
                       style={{
                         width: 56,
                         height: 56,
-                        background: "linear-gradient(135deg,#20B486,#17926d)",
+                        background: "linear-gradient(135deg,#d00000,#9d0208)",
                         borderRadius: 12,
                         display: "flex",
                         alignItems: "center",
@@ -265,17 +265,17 @@ export default function EnrollmentsPage() {
                           style={{
                             fontSize: 17,
                             fontWeight: 700,
-                            color: "#1a1a2e",
+                            color: "#03071e",
                             marginBottom: 4,
                             cursor: "pointer",
                           }}
                           onMouseEnter={(ev) =>
                             ((ev.currentTarget as HTMLElement).style.color =
-                              "#20B486")
+                              "#d00000")
                           }
                           onMouseLeave={(ev) =>
                             ((ev.currentTarget as HTMLElement).style.color =
-                              "#1a1a2e")
+                              "#03071e")
                           }
                         >
                           {e.title}
@@ -290,7 +290,7 @@ export default function EnrollmentsPage() {
                     <Link
                       href={`/progress/${e.courseId}`}
                       style={{
-                        background: "#20B486",
+                        background: "#d00000",
                         color: "#fff",
                         textDecoration: "none",
                         padding: "8px 16px",
@@ -335,7 +335,7 @@ export default function EnrollmentsPage() {
                       style={{
                         fontSize: 14,
                         fontWeight: 700,
-                        color: e.progressPercent === 100 ? "#20B486" : "#333",
+                        color: e.progressPercent === 100 ? "#d00000" : "#333",
                       }}
                     >
                       {e.progressPercent}%
@@ -353,7 +353,7 @@ export default function EnrollmentsPage() {
                       style={{
                         height: "100%",
                         width: `${e.progressPercent}%`,
-                        background: "linear-gradient(90deg,#20B486,#17926d)",
+                        background: "linear-gradient(90deg,#d00000,#9d0208)",
                         borderRadius: 4,
                       }}
                     />

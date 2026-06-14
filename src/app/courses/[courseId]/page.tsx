@@ -153,8 +153,8 @@ export default function CourseDetail() {
   if (error || !course) return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16 }}>
       <span style={{ fontSize: 64 }} aria-hidden="true">😅</span>
-      <h2 style={{ color: "#1a1a2e" }}>강의를 찾을 수 없습니다.</h2>
-      <Link href="/" style={{ color: "#20B486", fontWeight: 600, textDecoration: "none" }}>← 목록으로</Link>
+      <h2 style={{ color: "#03071e" }}>강의를 찾을 수 없습니다.</h2>
+      <Link href="/" style={{ color: "#d00000", fontWeight: 600, textDecoration: "none" }}>← 목록으로</Link>
     </div>
   );
 
@@ -163,18 +163,18 @@ export default function CourseDetail() {
 
   return (
     <>
-    <div style={{ minHeight: "100vh", background: "#f8faf9" }}>
+    <div style={{ minHeight: "100vh", background: "#fffaf1" }}>
       <a href="#main-content" className="skip-nav">본문으로 이동</a>
       <Navbar active="강의" />
 
       {/* 헤더 */}
-      <header style={{ background: "linear-gradient(135deg, #1a1a2e, #16213e)", padding: "48px 40px", color: "#fff" }}>
+      <header style={{ background: "linear-gradient(135deg, #03071e, #370617)", padding: "48px 40px", color: "#fff" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <Link href="/" style={{ color: "#20B486", textDecoration: "none", fontSize: 13, fontWeight: 600 }}>← 전체 강의</Link>
+          <Link href="/" style={{ color: "#d00000", textDecoration: "none", fontSize: 13, fontWeight: 600 }}>← 전체 강의</Link>
           <div style={{ display: "flex", alignItems: "flex-start", gap: 28, marginTop: 20 }}>
             <div style={{
               width: 200, height: 130, borderRadius: 12, overflow: "hidden", flexShrink: 0,
-              background: "linear-gradient(135deg, #20B486, #17926d)",
+              background: "linear-gradient(135deg, #d00000, #9d0208)",
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
               {course.thumbnailUrl ? (
@@ -206,7 +206,7 @@ export default function CourseDetail() {
                   style={{
                     marginTop: 16,
                     padding: "8px 20px",
-                    background: subscribed ? "rgba(255,255,255,0.1)" : "#20B486",
+                    background: subscribed ? "rgba(255,255,255,0.1)" : "#d00000",
                     color: "#fff",
                     border: subscribed ? "1.5px solid rgba(255,255,255,0.3)" : "none",
                     borderRadius: 8,
@@ -230,9 +230,9 @@ export default function CourseDetail() {
         {/* 좌측: 커리큘럼 */}
         <section aria-label="커리큘럼">
           <div style={{ background: "#fff", borderRadius: 16, padding: 28, boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-            <h2 style={{ fontSize: 18, fontWeight: 700, color: "#1a1a2e", marginBottom: 20, paddingBottom: 16, borderBottom: "2px solid #f0f9f5" }}>
+            <h2 style={{ fontSize: 18, fontWeight: 700, color: "#03071e", marginBottom: 20, paddingBottom: 16, borderBottom: "2px solid #f0f9f5" }}>
               <span aria-hidden="true">📚 </span>커리큘럼{" "}
-              <span style={{ color: "#20B486", fontSize: 14 }}>{course.lessons?.length ?? 0}강</span>
+              <span style={{ color: "#d00000", fontSize: 14 }}>{course.lessons?.length ?? 0}강</span>
             </h2>
             {(course.lessons?.length ?? 0) === 0 ? (
               <p style={{ color: "#aaa", textAlign: "center", padding: "32px 0" }}>등록된 레슨이 없습니다.</p>
@@ -249,27 +249,27 @@ export default function CourseDetail() {
                           width: "100%",
                           display: "flex", alignItems: "center", gap: 14, padding: "14px 16px",
                           borderRadius: isOpen ? "10px 10px 0 0" : 10,
-                          background: isOpen ? "#e8f5f0" : "#f8faf9",
-                          border: `1.5px solid ${isOpen ? "#20B486" : "#eef7f3"}`,
+                          background: isOpen ? "#fff0df" : "#fffaf1",
+                          border: `1.5px solid ${isOpen ? "#d00000" : "#eadfd3"}`,
                           borderBottom: isOpen ? "none" : undefined,
                           cursor: "pointer",
                           textAlign: "left",
                         }}
                       >
                         <div style={{
-                          width: 28, height: 28, background: "#20B486", borderRadius: "50%",
+                          width: 28, height: 28, background: "#d00000", borderRadius: "50%",
                           display: "flex", alignItems: "center", justifyContent: "center",
                           color: "#fff", fontSize: 12, fontWeight: 700, flexShrink: 0,
                         }} aria-hidden="true">
                           {l.order}
                         </div>
                         <span style={{ fontSize: 15, color: "#333", fontWeight: 500, flex: 1 }}>{l.title}</span>
-                        <span style={{ fontSize: 12, color: "#20B486" }} aria-hidden="true">{isOpen ? "▲" : "▼"}</span>
+                        <span style={{ fontSize: 12, color: "#d00000" }} aria-hidden="true">{isOpen ? "▲" : "▼"}</span>
                       </button>
                       {isOpen && (
                         <div style={{
                           padding: "14px 20px", background: "#f8fdf9",
-                          border: "1.5px solid #20B486", borderTop: "1px solid #c8edd9",
+                          border: "1.5px solid #d00000", borderTop: "1px solid #ffd49a",
                           borderRadius: "0 0 10px 10px", fontSize: 14,
                           color: l.description ? "#555" : "#aaa", lineHeight: 1.7,
                         }}>
@@ -285,8 +285,8 @@ export default function CourseDetail() {
         </section>
 
         {/* 우측: 수강 신청 카드 */}
-        <aside aria-label="수강 신청" style={{ position: "sticky", top: 80, height: "fit-content", background: "#fff", borderRadius: 16, padding: 28, boxShadow: "0 4px 24px rgba(32,180,134,0.12)", border: "1.5px solid #e8f5f0" }}>
-          <div style={{ fontSize: 32, fontWeight: 800, color: "#20B486", marginBottom: 6 }}>
+        <aside aria-label="수강 신청" style={{ position: "sticky", top: 80, height: "fit-content", background: "#fff", borderRadius: 16, padding: 28, boxShadow: "0 4px 24px rgba(208,0,0,0.14)", border: "1.5px solid #fff0df" }}>
+          <div style={{ fontSize: 32, fontWeight: 800, color: "#d00000", marginBottom: 6 }}>
             {course.price === 0 ? "무료" : `₩${course.price?.toLocaleString()}`}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 20 }}>
@@ -295,7 +295,7 @@ export default function CourseDetail() {
             <span style={{ fontSize: 13, color: "#aaa" }}>({course.studentCount}명)</span>
           </div>
 
-          <dl style={{ background: "#f8faf9", borderRadius: 10, padding: 16, marginBottom: 20, display: "flex", flexDirection: "column", gap: 10 }}>
+          <dl style={{ background: "#fffaf1", borderRadius: 10, padding: 16, marginBottom: 20, display: "flex", flexDirection: "column", gap: 10 }}>
             {[["강의 수", `${course.lessons?.length ?? 0}강`], ["수강생", `${course.studentCount}명`]].map(([k, v]) => (
               <div key={k} style={{ display: "flex", justifyContent: "space-between", fontSize: 14 }}>
                 <dt style={{ color: "#888" }}>{k}</dt>
@@ -310,7 +310,7 @@ export default function CourseDetail() {
               onClick={handleBuyNow}
               style={{
                 width: "100%", padding: 16,
-                background: "#20B486",
+                background: "#d00000",
                 color: "#fff", border: "none", borderRadius: 12,
                 fontSize: 16, fontWeight: 700, cursor: "pointer",
                 marginBottom: 12,
@@ -325,7 +325,7 @@ export default function CourseDetail() {
               disabled={enrolled || enrolling}
               style={{
                 width: "100%", padding: 16,
-                background: enrolled ? "#aaa" : "#20B486",
+                background: enrolled ? "#aaa" : "#d00000",
                 color: "#fff", border: "none", borderRadius: 12,
                 fontSize: 16, fontWeight: 700,
                 cursor: enrolled ? "default" : "pointer",
@@ -338,7 +338,7 @@ export default function CourseDetail() {
           )}
 
           {enrolled && (
-            <Link href="/enrollments" style={{ display: "block", textAlign: "center", color: "#20B486", textDecoration: "none", fontSize: 14, fontWeight: 600, marginBottom: 16 }}>
+            <Link href="/enrollments" style={{ display: "block", textAlign: "center", color: "#d00000", textDecoration: "none", fontSize: 14, fontWeight: 600, marginBottom: 16 }}>
               내 강의 목록 보기 →
             </Link>
           )}

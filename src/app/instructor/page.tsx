@@ -158,21 +158,21 @@ export default function InstructorPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f8faf9" }}>
+    <div style={{ minHeight: "100vh", background: "#fffaf1" }}>
       <Navbar active="강사" />
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "48px 24px" }}>
 
         {/* 헤더 */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
           <div>
-            <h1 style={{ fontSize: 28, fontWeight: 800, color: "#1a1a2e", marginBottom: 6 }}>
+            <h1 style={{ fontSize: 28, fontWeight: 800, color: "#03071e", marginBottom: 6 }}>
               강사 대시보드
             </h1>
             <p style={{ fontSize: 15, color: "#888" }}>강의를 만들고 레슨을 관리하세요.</p>
           </div>
           <button
             onClick={openCreate}
-            style={{ background: "#20B486", color: "#fff", border: "none", borderRadius: 10, padding: "12px 24px", fontSize: 15, fontWeight: 700, cursor: "pointer" }}
+            style={{ background: "#d00000", color: "#fff", border: "none", borderRadius: 10, padding: "12px 24px", fontSize: 15, fontWeight: 700, cursor: "pointer" }}
           >
             + 새 강의 만들기
           </button>
@@ -186,11 +186,11 @@ export default function InstructorPage() {
             { label: "평균 평점", value: stats.rating.toFixed(1), icon: "⭐" },
           ].map((s) => (
             <div key={s.label} style={{ background: "#fff", borderRadius: 16, padding: 24, boxShadow: "0 2px 12px rgba(0,0,0,0.06)", display: "flex", alignItems: "center", gap: 16 }}>
-              <div style={{ width: 52, height: 52, background: "#e8f5f0", borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>
+              <div style={{ width: 52, height: 52, background: "#fff0df", borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>
                 {s.icon}
               </div>
               <div>
-                <div style={{ fontSize: 26, fontWeight: 800, color: "#20B486" }}>{s.value}</div>
+                <div style={{ fontSize: 26, fontWeight: 800, color: "#d00000" }}>{s.value}</div>
                 <div style={{ fontSize: 13, color: "#888", marginTop: 2 }}>{s.label}</div>
               </div>
             </div>
@@ -200,7 +200,7 @@ export default function InstructorPage() {
         <InstructorQuestions />
 
         {/* 강의 목록 */}
-        <h2 style={{ fontSize: 18, fontWeight: 700, color: "#1a1a2e", marginBottom: 16 }}>내 강의 목록</h2>
+        <h2 style={{ fontSize: 18, fontWeight: 700, color: "#03071e", marginBottom: 16 }}>내 강의 목록</h2>
         {loading ? (
           <p style={{ color: "#aaa", textAlign: "center", padding: 40 }}>불러오는 중...</p>
         ) : courses.length === 0 ? (

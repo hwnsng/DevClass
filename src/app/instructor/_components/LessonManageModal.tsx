@@ -113,7 +113,7 @@ export default function LessonManageModal({
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 style={{ fontSize: 18, fontWeight: 800, color: "#1a1a2e", marginBottom: 4 }}>
+        <h3 style={{ fontSize: 18, fontWeight: 800, color: "#03071e", marginBottom: 4 }}>
           레슨 관리
         </h3>
         <p style={{ fontSize: 13, color: "#888", marginBottom: 20 }}>{course.title}</p>
@@ -126,7 +126,7 @@ export default function LessonManageModal({
           background: thumbnailDone ? "#f0faf5" : "#f8fdf9",
           marginBottom: 20,
         }}>
-          <p style={{ fontSize: 13, fontWeight: 700, color: "#20B486", marginBottom: 10 }}>
+          <p style={{ fontSize: 13, fontWeight: 700, color: "#d00000", marginBottom: 10 }}>
             {thumbnailDone ? "✅ 썸네일 업로드 완료" : "📷 강의 썸네일 변경"}
           </p>
           {!thumbnailDone && (
@@ -176,7 +176,7 @@ export default function LessonManageModal({
                       width: 28,
                       height: 28,
                       borderRadius: "50%",
-                      background: "#20B486",
+                      background: "#d00000",
                       color: "#fff",
                       display: "flex",
                       alignItems: "center",
@@ -196,7 +196,7 @@ export default function LessonManageModal({
                       </div>
                     )}
                   </div>
-                  <span style={{ fontSize: 12, color: l.videoUrl ? "#20B486" : "#aaa", flexShrink: 0 }}>
+                  <span style={{ fontSize: 12, color: l.videoUrl ? "#d00000" : "#aaa", flexShrink: 0 }}>
                     {l.videoUrl ? "▶ 영상 있음" : "영상 없음"}
                   </span>
                   <button
@@ -230,7 +230,7 @@ export default function LessonManageModal({
             marginBottom: 20,
           }}
         >
-          <p style={{ fontSize: 13, fontWeight: 700, color: "#20B486", marginBottom: 12 }}>
+          <p style={{ fontSize: 13, fontWeight: 700, color: "#d00000", marginBottom: 12 }}>
             + 새 레슨 추가
           </p>
           <input
