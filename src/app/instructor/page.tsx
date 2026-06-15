@@ -11,6 +11,7 @@ import CreateCourseModal from "./_components/CreateCourseModal";
 import LessonManageModal from "./_components/LessonManageModal";
 import EditCourseModal from "./_components/EditCourseModal";
 import InstructorQuestions from "./_components/InstructorQuestions";
+import { useToast } from "../components/ToastProvider";
 
 function uid() {
   return Math.random().toString(36).slice(2);
@@ -18,6 +19,7 @@ function uid() {
 
 export default function InstructorPage() {
   const router = useRouter();
+  const { showToast } = useToast();
   const [courses, setCourses] = useState<Course[]>([]);
   const [stats, setStats] = useState({ count: 0, students: 0, rating: 0 });
   const [loading, setLoading] = useState(true);
@@ -130,6 +132,15 @@ export default function InstructorPage() {
     }
   };
 
+  const finishCreateCourse = () => {
+    if (!lessonDrafts.some((draft) => draft.status === "done")) {
+      showToast("강의 커리큘럼이 비었습니다.", "error");
+      return;
+    }
+    setModalMode("none");
+    loadCourses();
+  };
+
   // ─── 강의 삭제 핸들러 ───────────────────────────────────────
   const handleDeleteConfirmed = async () => {
     if (!deleteCourse) return;
@@ -237,7 +248,7 @@ export default function InstructorPage() {
           onUpdateDraft={updateDraft}
           onUploadLesson={uploadLesson}
           onAddDraft={() => setLessonDrafts((p) => [...p, { uid: uid(), title: "", file: null, status: "pending" }])}
-          onFinish={() => { setModalMode("none"); loadCourses(); }}
+          onFinish={finishCreateCourse}
           onClose={() => setModalMode("none")}
         />
       )}
