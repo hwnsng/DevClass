@@ -192,7 +192,7 @@ export default function CartPage() {
             </div>
             <button style={{ ...styles.btn, width: "100%", marginTop: 20, opacity: paying ? 0.65 : 1 }}
               onClick={handlePayment} disabled={paying}>
-              {paying ? "처리 중..." : totalAmount === 0 ? "무료 수강 등록" : "토스로 결제하기"}
+              {paying ? "처리 중..." : totalAmount === 0 ? "무료 수강 등록" : "결제하기"}
             </button>
           </div>
         </div>
