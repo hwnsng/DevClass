@@ -170,7 +170,7 @@ export default function CourseDetail() {
 
         {/* 좌측: 커리큘럼 */}
         <section aria-label="커리큘럼">
-          <div style={{ background: "#fff", borderRadius: 16, padding: 28, boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+          <div style={{ background: "#fff", borderRadius: 16, padding: 28, boxShadow: "0 2px 12px rgba(0,0,0,0.06)", minHeight: 480 }}>
             <h2 style={{ fontSize: 18, fontWeight: 700, color: "#03071e", marginBottom: 20, paddingBottom: 16, borderBottom: "2px solid #f0f9f5" }}>
               <span aria-hidden="true">📚 </span>커리큘럼{" "}
               <span style={{ color: "#d00000", fontSize: 14 }}>{course.lessons?.length ?? 0}강</span>
@@ -226,7 +226,7 @@ export default function CourseDetail() {
         </section>
 
         {/* 우측: 수강 신청 카드 */}
-        <aside aria-label="수강 신청" style={{ position: "sticky", top: 80, height: "fit-content", background: "#fff", borderRadius: 16, padding: 28, boxShadow: "0 4px 24px rgba(208,0,0,0.14)", border: "1.5px solid #fff0df" }}>
+        <aside aria-label="수강 신청" style={{ alignSelf: "start", background: "#fff", borderRadius: 16, padding: 28, boxShadow: "0 4px 24px rgba(208,0,0,0.14)", border: "1.5px solid #fff0df" }}>
           <div style={{ fontSize: 32, fontWeight: 800, color: "#d00000", marginBottom: 6 }}>
             {course.price === 0 ? "무료" : `₩${course.price?.toLocaleString()}`}
           </div>
