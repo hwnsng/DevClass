@@ -20,12 +20,16 @@ export default function Navbar({ active }: { active?: string }) {
     } catch {}
   }, [router]);
 
-  const links = [
-    { href: "/", label: "강의" },
-    { href: "/enrollments", label: "내 학습" },
-    ...(user ? [{ href: "/cart", label: "장바구니" }] : []),
-    ...(user?.role === "INSTRUCTOR" ? [{ href: "/instructor", label: "강사 센터" }] : []),
-  ];
+  const links = user?.role === "INSTRUCTOR"
+    ? [
+        { href: "/", label: "강의" },
+        { href: "/instructor", label: "강사 센터" },
+      ]
+    : [
+        { href: "/", label: "강의" },
+        { href: "/enrollments", label: "내 학습" },
+        ...(user ? [{ href: "/cart", label: "장바구니" }] : []),
+      ];
 
   return <>
     <nav style={{ position: "sticky", top: 0, zIndex: 100, background: "rgba(3,7,30,.96)", color: "white", borderBottom: "1px solid rgba(255,186,8,.24)" }}>
