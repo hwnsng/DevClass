@@ -23,6 +23,7 @@ export default function Navbar({ active }: { active?: string }) {
   const links = [
     { href: "/", label: "강의" },
     { href: "/enrollments", label: "내 학습" },
+    ...(user ? [{ href: "/cart", label: "장바구니" }] : []),
     ...(user?.role === "INSTRUCTOR" ? [{ href: "/instructor", label: "강사 센터" }] : []),
   ];
 

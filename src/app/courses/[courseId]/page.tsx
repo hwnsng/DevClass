@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import ConfirmToast from "../../components/ConfirmToast";
 import SuccessToast from "../../components/SuccessToast";
-import { apiFetch, reportApi, cartApi, getLocalUserId, getAuthUser, subscriptionApi } from "@/app/lib/api";
+import { apiFetch, reportApi, cartApi, getLocalUserId, getAuthUser, thumbnailSrc } from "@/app/lib/api";
 import CourseQna from "./CourseQna";
 
 const REPORT_REASONS = [
@@ -25,10 +25,7 @@ export default function CourseDetail() {
   const [enrolled, setEnrolled] = useState(false);
   const [enrolling, setEnrolling] = useState(false);
   const [openLessonId, setOpenLessonId] = useState<number | null>(null);
-
-  // 구독
-  const [subscribed, setSubscribed] = useState(false);
-  const [subscribing, setSubscribing] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
 
   // 신고
   const [reported, setReported] = useState(false);
@@ -48,42 +45,7 @@ export default function CourseDetail() {
       .then(setCourse)
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
-
-    // 구독 상태 확인
-    const user = getAuthUser();
-    if (user) {
-      apiFetch(`/courses/${id}`).then((c: any) => {
-        if (c?.instructorId) {
-          subscriptionApi.isSubscribed(user.id, c.instructorId)
-            .then((r: any) => setSubscribed(!!r?.subscribed))
-            .catch(() => {});
-        }
-      }).catch(() => {});
-    }
   }, [courseId]);
-
-  // 강사 구독/해제
-  const toggleSubscription = async () => {
-    const user = getAuthUser();
-    if (!user) { router.push("/auth/login"); return; }
-    if (!course?.instructorId) return;
-    setSubscribing(true);
-    try {
-      if (subscribed) {
-        await subscriptionApi.unsubscribe(user.id, course.instructorId);
-        setSubscribed(false);
-        setSuccessMsg("구독이 해제되었습니다.");
-      } else {
-        await subscriptionApi.subscribe(user.id, course.instructorId);
-        setSubscribed(true);
-        setSuccessMsg(`${course.instructorName} 강사를 구독했습니다. 신규 강의 알림을 받습니다.`);
-      }
-    } catch (e: any) {
-      setSuccessMsg("처리 실패: " + e.message);
-    } finally {
-      setSubscribing(false);
-    }
-  };
 
   // 무료 수강 등록
   const doEnroll = async () => {
@@ -107,16 +69,17 @@ export default function CourseDetail() {
     }
   };
 
-  // 유료 강의 장바구니 담기 → 결제 페이지
-  const handleBuyNow = async () => {
+  const handleAddToCart = async () => {
     const user = getAuthUser();
     if (!user) { router.push("/auth/login"); return; }
     try {
       await cartApi.addToCart(user.id, Number(courseId));
-      router.push("/cart");
+      setAddedToCart(true);
+      setSuccessMsg("장바구니에 강의를 담았습니다.");
     } catch (e: any) {
       if (e.message?.includes("이미")) {
-        router.push("/cart");
+        setAddedToCart(true);
+        setSuccessMsg("이미 장바구니에 담긴 강의입니다.");
       } else {
         setSuccessMsg("장바구니 추가 실패: " + e.message);
       }
@@ -159,8 +122,6 @@ export default function CourseDetail() {
   );
 
   const isPaid = course.price > 0;
-  const user = getAuthUser();
-
   return (
     <>
     <div style={{ minHeight: "100vh", background: "#fffaf1" }}>
@@ -178,7 +139,7 @@ export default function CourseDetail() {
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
               {course.thumbnailUrl ? (
-                <img src={course.thumbnailUrl} alt={`${course.title} 썸네일`}
+                <img src={thumbnailSrc(Number(courseId))} alt={`${course.title} 썸네일`}
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   loading="lazy"
                   onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
@@ -187,6 +148,9 @@ export default function CourseDetail() {
             </div>
             <div style={{ flex: 1 }}>
               <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 10 }}>{course.title}</h1>
+              <p style={{ color: "#ffba08", fontSize: 14, fontWeight: 700, marginBottom: 10 }}>
+                강사 {course.instructorName || "알 수 없는 강사"}
+              </p>
               <p style={{ fontSize: 15, color: "#ccc", maxWidth: 600, lineHeight: 1.7, marginBottom: 16 }}>
                 {course.description}
               </p>
@@ -196,29 +160,6 @@ export default function CourseDetail() {
                 <span><span aria-hidden="true">📚 </span><span>{course.lessons?.length ?? 0}강</span></span>
                 <span><span aria-hidden="true">📅 </span><span>{course.createdAt?.slice(0, 10)}</span></span>
               </div>
-              {/* 강사 구독 버튼 */}
-              {user && course.instructorId && user.id !== course.instructorId && (
-                <button
-                  onClick={toggleSubscription}
-                  disabled={subscribing}
-                  aria-pressed={subscribed}
-                  aria-label={subscribed ? `${course.instructorName} 강사 구독 중. 클릭하여 구독 해제` : `${course.instructorName} 강사 구독하기`}
-                  style={{
-                    marginTop: 16,
-                    padding: "8px 20px",
-                    background: subscribed ? "rgba(255,255,255,0.1)" : "#d00000",
-                    color: "#fff",
-                    border: subscribed ? "1.5px solid rgba(255,255,255,0.3)" : "none",
-                    borderRadius: 8,
-                    fontSize: 13,
-                    fontWeight: 600,
-                    cursor: subscribing ? "default" : "pointer",
-                    opacity: subscribing ? 0.7 : 1,
-                  }}
-                >
-                  {subscribing ? "처리 중..." : subscribed ? "✓ 구독 중" : `🔔 ${course.instructorName} 구독`}
-                </button>
-              )}
             </div>
           </div>
         </div>
@@ -307,17 +248,18 @@ export default function CourseDetail() {
           {/* 결제/수강 버튼 */}
           {isPaid ? (
             <button
-              onClick={handleBuyNow}
+              onClick={handleAddToCart}
+              disabled={addedToCart}
               style={{
                 width: "100%", padding: 16,
-                background: "#d00000",
+                background: addedToCart ? "#6a040f" : "#d00000",
                 color: "#fff", border: "none", borderRadius: 12,
                 fontSize: 16, fontWeight: 700, cursor: "pointer",
                 marginBottom: 12,
               }}
-              aria-label={`${course.title} 결제하기 ₩${course.price?.toLocaleString()}`}
+              aria-label={`${course.title} 장바구니 담기`}
             >
-              결제하기
+              {addedToCart ? "장바구니에 담김" : "장바구니 담기"}
             </button>
           ) : (
             <button
@@ -335,6 +277,12 @@ export default function CourseDetail() {
             >
               {enrolling ? "처리 중..." : enrolled ? "✓ 수강 등록 완료" : "수강 등록하기"}
             </button>
+          )}
+
+          {isPaid && addedToCart && (
+            <Link href="/cart" style={{ display: "block", textAlign: "center", color: "#d00000", textDecoration: "none", fontSize: 14, fontWeight: 700, marginBottom: 16 }}>
+              장바구니 보기 →
+            </Link>
           )}
 
           {enrolled && (

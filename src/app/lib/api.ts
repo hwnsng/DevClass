@@ -197,13 +197,3 @@ export const questionApi = {
   answer: (questionId: number, answer: string) =>
     apiFetch(`/questions/${questionId}/answer`, { method: "PUT", body: JSON.stringify({ answer }) }),
 };
-
-// ─── 구독 (강사 팔로우) ────────────────────────────
-export const subscriptionApi = {
-  subscribe: (userId: number, instructorId: number) =>
-    apiFetch("/subscriptions", { method: "POST", body: JSON.stringify({ userId, instructorId }) }),
-  unsubscribe: (userId: number, instructorId: number) =>
-    apiFetch(`/subscriptions?userId=${userId}&instructorId=${instructorId}`, { method: "DELETE" }),
-  isSubscribed: (userId: number, instructorId: number) =>
-    apiFetch(`/subscriptions/check?userId=${userId}&instructorId=${instructorId}`),
-};

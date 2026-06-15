@@ -57,7 +57,7 @@ export default function HomePage() {
       {loading ? <div className="empty">강의를 불러오는 중입니다.</div> : courses.length === 0 ? <div className="card empty">검색 결과가 없습니다. 다른 키워드로 찾아보세요.</div> :
         <div className="grid course-grid">{courses.map((course) =>
           <Link className="card course-card" href={`/courses/${course.courseId}`} key={course.courseId}>
-            <div className="course-cover" style={course.thumbnailUrl ? { backgroundImage: `linear-gradient(rgba(3,7,30,.2),rgba(3,7,30,.55)),url(${thumbnailSrc(course.courseId)})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}>DEV</div>
+            <div className="course-cover" style={course.thumbnailUrl ? { backgroundImage: `url(${thumbnailSrc(course.courseId)})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined} aria-label={`${course.title} 썸네일`} />
             <div className="course-body"><div className="eyebrow">{course.instructorName || "DevClass Instructor"}</div><h3>{course.title}</h3><div className="course-meta"><span>평점 {Number(course.ratingAvg || 0).toFixed(1)}</span><span>수강생 {course.studentCount || 0}명</span></div><div className="course-price">{course.price ? `${course.price.toLocaleString()}원` : "무료"}</div></div>
           </Link>)}</div>}
     </main>
