@@ -76,9 +76,9 @@ th { color: var(--muted); font-size: 12px; letter-spacing: .04em; text-transform
 
 .hero { position: relative; overflow: hidden; color: white; background: var(--ink); padding: 78px 0 68px; }
 .hero::after { content: ""; position: absolute; width: 520px; height: 520px; right: -120px; top: -210px; border-radius: 50%; background: radial-gradient(circle, var(--yellow), var(--orange) 34%, var(--primary) 65%, transparent 66%); opacity: .88; }
-.hero-content { position: relative; z-index: 1; max-width: 740px; }
+.hero-content { position: relative; z-index: 1; max-width: 920px; }
 .hero h1 { margin: 14px 0; font-size: clamp(38px, 7vw, 72px); line-height: 1.02; letter-spacing: -.055em; }
-.hero p { max-width: 610px; color: #f9d9c8; font-size: 18px; }
+.hero p { max-width: none; color: #f9d9c8; font-size: 18px; white-space: nowrap; }
 .search-bar { display: flex; gap: 10px; max-width: 680px; margin-top: 30px; padding: 8px; border-radius: 14px; background: white; box-shadow: var(--shadow); }
 .search-bar input { flex: 1; min-width: 0; border: 0; padding: 9px 12px; outline: 0; }
 .course-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 24px; }
@@ -120,6 +120,7 @@ th { color: var(--muted); font-size: 12px; letter-spacing: .04em; text-transform
 @media (max-width: 900px) {
   .course-grid, .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero::after { opacity: .35; }
+  .hero p { white-space: normal; }
 }
 @media (max-width: 640px) {
   .container { width: min(100% - 28px, 1180px); }
