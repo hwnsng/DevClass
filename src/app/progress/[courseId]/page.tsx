@@ -80,15 +80,16 @@ export default function ProgressPage() {
           body: JSON.stringify({ percent: newPercent, lastLessonId: lessonId }),
         });
         setProgress(data);
-        setPercent(newPercent);
-        setCompletedCount(newCompletedCount);
+        const savedPercent = data.percent ?? newPercent;
+        setPercent(savedPercent);
+        setCompletedCount(Math.round((savedPercent / 100) * (course?.lessons?.length ?? 0)));
         setSaveStatus("saved");
         setTimeout(() => setSaveStatus("idle"), 2000);
       } catch {
         setSaveStatus("idle");
       }
     },
-    [courseId],
+    [courseId, course?.lessons?.length],
   );
 
   const handleSelectLesson = async (lesson: any) => {
@@ -115,6 +116,10 @@ export default function ProgressPage() {
 
   const handleComplete = () => {
     if (!course?.lessons || !currentLesson) return;
+    if (autoSaveTimer.current) {
+      clearInterval(autoSaveTimer.current);
+      autoSaveTimer.current = null;
+    }
     const idx = course.lessons.findIndex((l: any) => l.lessonId === currentLesson.lessonId);
     const newCompletedCount = idx + 1;
     const newPercent = Math.round((newCompletedCount / course.lessons.length) * 100);
