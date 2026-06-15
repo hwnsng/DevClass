@@ -41,8 +41,21 @@ export default function CourseDetail() {
 
   useEffect(() => {
     const id = Number(courseId);
-    apiFetch(`/courses/${id}`)
-      .then(setCourse)
+    const user = getAuthUser();
+    const courseRequest = apiFetch(`/courses/${id}`);
+    const enrollmentRequest = user
+      ? apiFetch(`/users/${user.id}/enrollments?page=1&size=100`).catch(() => ({ items: [] }))
+      : Promise.resolve({ items: [] });
+    const cartRequest = user
+      ? cartApi.getCart(user.id).catch(() => [])
+      : Promise.resolve([]);
+
+    Promise.all([courseRequest, enrollmentRequest, cartRequest])
+      .then(([courseData, enrollmentData, cartData]: [any, any, any[]]) => {
+        setCourse(courseData);
+        setEnrolled(enrollmentData.items?.some((item: any) => item.courseId === id) ?? false);
+        setAddedToCart(cartData.some((item: any) => item.courseId === id));
+      })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, [courseId]);
@@ -246,13 +259,12 @@ export default function CourseDetail() {
           </dl>
 
           {/* 결제/수강 버튼 */}
-          {isPaid ? (
+          {isPaid && !enrolled && !addedToCart ? (
             <button
               onClick={handleAddToCart}
-              disabled={addedToCart}
               style={{
                 width: "100%", padding: 16,
-                background: addedToCart ? "#6a040f" : "#d00000",
+                background: "#d00000",
                 color: "#fff", border: "none", borderRadius: 12,
                 fontSize: 16, fontWeight: 700, cursor: "pointer",
                 marginBottom: 12,
@@ -261,7 +273,7 @@ export default function CourseDetail() {
             >
               {addedToCart ? "장바구니에 담김" : "장바구니 담기"}
             </button>
-          ) : (
+          ) : !isPaid ? (
             <button
               onClick={() => !enrolled && setShowEnrollConfirm(true)}
               disabled={enrolled || enrolling}
@@ -277,7 +289,7 @@ export default function CourseDetail() {
             >
               {enrolling ? "처리 중..." : enrolled ? "✓ 수강 등록 완료" : "수강 등록하기"}
             </button>
-          )}
+          ) : null}
 
           {isPaid && addedToCart && (
             <Link href="/cart" style={{ display: "block", textAlign: "center", color: "#d00000", textDecoration: "none", fontSize: 14, fontWeight: 700, marginBottom: 16 }}>
