@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ToastProvider } from "./components/ToastProvider";
+import AdminRouteGuard from "./components/AdminRouteGuard";
 
 export const metadata: Metadata = {
   title: "DevClass — 개발자 온라인 강의 플랫폼",
@@ -20,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#03071e" />
       </head>
-      <body><ToastProvider>{children}</ToastProvider></body>
+      <body><ToastProvider><AdminRouteGuard>{children}</AdminRouteGuard></ToastProvider></body>
     </html>
   );
 }

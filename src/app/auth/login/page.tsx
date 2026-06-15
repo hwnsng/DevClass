@@ -19,6 +19,11 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const data = await authApi.login({ email: email.trim(), password });
+      if (data.role === "ADMIN") {
+        localStorage.removeItem("devclass-auth");
+        showToast("관리자 계정은 관리자 전용 로그인 화면을 이용해주세요.", "error");
+        return;
+      }
       localStorage.setItem("devclass-auth", JSON.stringify({ id: data.id, email: data.email, name: data.name, role: data.role, token: data.token }));
       showToast("로그인되었습니다.", "success"); router.push("/");
     } catch (error: any) { showToast(error.message || "로그인에 실패했습니다.", "error"); }

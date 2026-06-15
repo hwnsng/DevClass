@@ -117,6 +117,11 @@ th { color: var(--muted); font-size: 12px; letter-spacing: .04em; text-transform
 .skip-nav { position: absolute; top: -100px; left: 12px; z-index: 3000; padding: 10px 14px; color: white; background: var(--ink); }
 .skip-nav:focus { top: 12px; }
 
+.admin-header { position: sticky; top: 0; z-index: 100; color: white; background: linear-gradient(135deg, var(--ink), var(--wine)); border-bottom: 1px solid rgba(255,186,8,.25); }
+.admin-header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.admin-header strong { display: block; margin-top: 3px; font-size: 20px; }
+.admin-identity { color: #ffd89a; font-size: 13px; font-weight: 800; }
+
 @media (max-width: 900px) {
   .course-grid, .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero::after { opacity: .35; }

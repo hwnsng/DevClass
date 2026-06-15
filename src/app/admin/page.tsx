@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Navbar from "../components/Navbar";
+import AdminHeader from "../components/AdminHeader";
 import { useToast } from "../components/ToastProvider";
 import { adminApi, getAuthUser, reportApi } from "../lib/api";
 
@@ -28,11 +28,11 @@ export default function AdminPage() {
     } catch (error: any) { showToast(error.message || "관리자 데이터를 불러오지 못했습니다.", "error"); }
   }, [showToast]);
 
-  useEffect(() => { const user = getAuthUser(); if (!user || user.role !== "ADMIN") { router.push("/auth/login"); return; } load(); }, [load, router]);
+  useEffect(() => { const user = getAuthUser(); if (!user || user.role !== "ADMIN") { router.replace("/ops/login"); return; } load(); }, [load, router]);
   const run = async (action: () => Promise<any>, message: string) => { try { await action(); showToast(message, "success"); await load(); } catch (error: any) { showToast(error.message, "error"); } };
 
   const tabs: { id: Tab; label: string }[] = [{ id: "courses", label: "강의 승인" }, { id: "reports", label: "신고 관리" }, { id: "users", label: "사용자" }, { id: "jobs", label: "운영 작업" }];
-  return <div className="shell"><Navbar active="운영 관리" /><main className="container page">
+  return <div className="shell"><AdminHeader /><main className="container page">
     <div className="eyebrow">Operations console</div><h1 className="page-title">서비스 운영 관리</h1><p className="page-copy">강의 승인, 신고, 사용자, 스케줄러 실행 상태를 한곳에서 확인합니다.</p>
     <section className="grid stats-grid">
       {[['전체 사용자',dashboard.users],['전체 강의',dashboard.courses],['승인 대기',dashboard.pendingCourses],['누적 결제액',`${Number(dashboard.paidRevenue||0).toLocaleString()}원`]].map(([label,value]) => <div className="card stat" key={String(label)}><span>{label}</span><strong>{value ?? 0}</strong></div>)}

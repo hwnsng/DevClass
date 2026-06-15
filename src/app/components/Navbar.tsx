@@ -13,14 +13,17 @@ export default function Navbar({ active }: { active?: string }) {
   const [confirming, setConfirming] = useState(false);
 
   useEffect(() => {
-    try { setUser(JSON.parse(localStorage.getItem("devclass-auth") || "null")); } catch {}
-  }, []);
+    try {
+      const stored = JSON.parse(localStorage.getItem("devclass-auth") || "null");
+      if (stored?.role === "ADMIN") { router.replace("/admin"); return; }
+      setUser(stored);
+    } catch {}
+  }, [router]);
 
   const links = [
     { href: "/", label: "강의" },
     { href: "/enrollments", label: "내 학습" },
-    ...(user && ["INSTRUCTOR", "ADMIN"].includes(user.role) ? [{ href: "/instructor", label: "강사 센터" }] : []),
-    ...(user?.role === "ADMIN" ? [{ href: "/admin", label: "운영 관리" }] : []),
+    ...(user?.role === "INSTRUCTOR" ? [{ href: "/instructor", label: "강사 센터" }] : []),
   ];
 
   return <>
