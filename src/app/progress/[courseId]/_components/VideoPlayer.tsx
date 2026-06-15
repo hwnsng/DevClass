@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { bookmarkApi, getLocalUserId } from "@/app/lib/api";
+import { bookmarkApi, getLocalUserId, VIDEO_BASE_URL } from "@/app/lib/api";
 
-const UPLOADS_BASE = "http://localhost:8080/uploads";
 const POSITION_SAVE_INTERVAL = 5000; // 5초마다 재생 위치 저장
 
 interface Bookmark {
@@ -20,7 +19,7 @@ interface Props {
 }
 
 export default function VideoPlayer({ lessonId, videoUrl, title, resumePosition, onTimeUpdate }: Props) {
-  const src = videoUrl ? `${UPLOADS_BASE}/${videoUrl}` : null;
+  const src = lessonId && videoUrl ? `${VIDEO_BASE_URL}/lessons/${lessonId}/video` : null;
   const videoRef = useRef<HTMLVideoElement>(null);
   const saveTimer = useRef<NodeJS.Timeout | null>(null);
   const userId = getLocalUserId(0);
